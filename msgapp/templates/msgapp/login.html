@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select User</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Select User to Join Chat</h2>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <select name="username" required>
+                {% if not user1_active %}
+                    <option value="user1">User 1</option>
+                {% endif %}
+                {% if not user2_active %}
+                    <option value="user2">User 2</option>
+                {% endif %}
+            </select>
+            <button type="submit">Enter Chat</button>
+        </form>
+    </div>
+</body>
+</html>
+

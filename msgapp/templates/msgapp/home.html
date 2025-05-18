@@ -1,0 +1,42 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat - {{ username }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Chatting as {{ username }}</h1>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="logout-btn" type="submit">Logout</button>
+            </form>
+        </div>
+
+        <div class="chat-area" id="chat-area">
+            {% for message in messages %}
+                <div class="chat-message {% if message.user == username %}own{% else %}other{% endif %}">
+                    <strong>{{ message.user }}:</strong> {{ message.msg }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <form class="input-area" method="POST">
+            {% csrf_token %}
+            <input type="text" name="msg" placeholder="Type your message..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        // Auto-scroll to latest message
+        const chatArea = document.getElementById("chat-area");
+        chatArea.scrollTop = chatArea.scrollHeight;
+    </script>
+</body>
+</html>
