@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from pymongo import MongoClient
-from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Connect to MongoDB
 client = MongoClient('mongodb+srv://srijan:1234@cluster0.yrnd8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 db = client['massage12']
 massage = db['msg']
 active_users = db['active_users']
-
 
 def login_view(request):
     user1_active = active_users.find_one({'user': 'user1'}) is not None
@@ -42,10 +42,28 @@ def home(request):
 
     if request.method == 'POST':
         msg = request.POST.get('msg')
-        massage.insert_one({'user': username, 'msg': msg})
+        if msg:  # Ensure the message is not empty
+            massage.insert_one({'user': username, 'msg': msg})
+        all_msgs = list(massage.find())
+        return render(request, 'msgapp/home.html', {'messages': all_msgs, 'username': username})
 
     all_msgs = list(massage.find())
     return render(request, 'msgapp/home.html', {'messages': all_msgs, 'username': username})
+
+@csrf_exempt  # Allow AJAX POST without CSRF for simplicity (see security note below)
+def messages_api(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        msg = data.get('msg')
+        username = request.session.get('username')
+        if username and msg:
+            massage.insert_one({'user': username, 'msg': msg})
+            return JsonResponse({'status': 'success'})
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
+    # GET: Return all messages
+    all_msgs = list(massage.find({}, {'_id': 0, 'user': 1, 'msg': 1}))  # Exclude _id
+    return JsonResponse({'messages': all_msgs})
 
 def logout_view(request):
     username = request.session.get('username')
@@ -54,11 +72,6 @@ def logout_view(request):
         request.session.flush()
     return redirect('login')
 
-
 def UsClear(request):
     active_users.delete_many({})
     return HttpResponse("All active users cleared.")
-
-
-
-

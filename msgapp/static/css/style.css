@@ -9,20 +9,20 @@ body {
     background-color: #202123;
     color: #ffffff;
     display: flex;
-    height: 100vh;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Login Page */
 .login-container {
-    width: 300px;
+    width: 90%;
+    max-width: 300px;
     padding: 30px;
     background-color: #343541;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     text-align: center;
+    margin: auto;
 }
 
 .login-container h2 {
@@ -62,12 +62,13 @@ body {
 
 /* Chat Area */
 .chat-container {
-    width: 100%;
-    max-width: 800px;
-    height: 100vh;
+    flex: 1;
     display: flex;
     flex-direction: column;
     background-color: #202123;
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
 }
 
 .chat-header {
@@ -126,10 +127,13 @@ body {
 
 /* Input Area */
 .input-area {
-    padding: 15px;
-    background-color: #343541;
     display: flex;
+    padding: 10px;
+    background-color: #343541;
     gap: 10px;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
 }
 
 .input-area input {
@@ -178,21 +182,13 @@ body {
     .chat-header h1 {
         font-size: 16px;
     }
-}
 
-@media (max-width: 600px) {
-    body {
+    .input-area {
         flex-direction: column;
+        align-items: stretch;
     }
 
-    .chat-container {
+    .input-area button {
         width: 100%;
-        height: 100vh;
-    }
-
-    .chat-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
     }
 }
