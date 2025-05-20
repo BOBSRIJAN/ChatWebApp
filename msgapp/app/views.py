@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from pymongo import MongoClient
 from django.views.decorators.csrf import csrf_exempt
+from .dbconf import db, massage, active_users
 import json
 
 # Connect to MongoDB
-client = MongoClient('mongodb+srv://srijan:1234@cluster0.yrnd8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-db = client['massage12']
-massage = db['msg']
-active_users = db['active_users']
+db = db
+massage = massage
+active_users = active_users
 
 def login_view(request):
     user1_active = active_users.find_one({'user': 'user1'}) is not None
