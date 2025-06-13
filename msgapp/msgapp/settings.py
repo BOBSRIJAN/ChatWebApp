@@ -26,8 +26,15 @@ SECRET_KEY = 'django-insecure-^c(@e!slg=&z$%#u6d(wz$e19vr)hm!se@=z(sryqx@$a8)gbq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://chatwebapp-14d9.onrender.com', '*']
-
+ALLOWED_HOSTS = [
+    'chatwebapp-ltgx.onrender.com',  # your Render app domain
+    'localhost',
+    '127.0.0.1',
+]
+# CSRF settings
+CSRF_TRUSTED_ORIGINS = [
+    'https://chatwebapp-ltgx.onrender.com',
+]
 
 # Application definition
 
