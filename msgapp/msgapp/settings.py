@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-^c(@e!slg=&z$%#u6d(wz$e19vr)hm!se@=z(sryqx@$a8)gbq
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'chatwebapp-ltgx.onrender.com',  # your Render app domain
+    'https://test1-r50k.onrender.com', # your Render app domain
     'localhost',
     '127.0.0.1',
 ]
