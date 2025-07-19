@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
 ]
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
-    'https://chatwebapp-ltgx.onrender.com',
+    'https://test1-r50k.onrender.com',
 ]
 
 # Application definition
